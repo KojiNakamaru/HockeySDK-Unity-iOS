@@ -1,9 +1,9 @@
 /*
  * Author: Christoph Wendt
  *
- * Version: 1.0.7
+ * Version: 1.0.8
  *
- * Copyright (c) 2013-2014 HockeyApp, Bit Stadium GmbH.
+ * Copyright (c) 2013-2015 HockeyApp, Bit Stadium GmbH.
  * All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person
@@ -142,7 +142,7 @@
 
 + (NSString *)sdkName{
 	
-	return @"HockeySDK";
+	return @"HockeySDK Side-By-Side Unity";
 }
 
 + (BOOL)handleOpenURL:(NSURL *) url sourceApplication:(NSString *) sourceApplication annotation:(id) annotation{
@@ -161,6 +161,78 @@
   NSString *msg = @"";
   NSString *method = @"GameViewLoaded";
   UnitySendMessage([gameObj UTF8String], [method UTF8String], [msg UTF8String]);
+}
+
++ (void)setCommonProperties:(NSDictionary *)commonProperties{
+	[BITHockeyManager sharedHockeyManager].telemetryManager.commonProperties = commonProperties;
+}
+
++ (NSDictionary *)commonProperties{
+	return [BITHockeyManager sharedHockeyManager].telemetryManager.commonProperties;
+}
+
++ (void)trackEventWithName:(NSString *)eventName{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackEventWithName:eventName];
+}
+
++ (void)trackEventWithName:(NSString *)eventName properties:(NSDictionary *)properties{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackEventWithName:eventName properties:properties];
+}
+
++ (void)trackTraceWithMessage:(NSString *)message{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackTraceWithMessage:message];
+}
+
++ (void)trackTraceWithMessage:(NSString *)message properties:(NSDictionary *)properties{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackTraceWithMessage:message properties:properties];
+}
+
++ (void)trackMetricWithName:(NSString *)metricName value:(double)value{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackMetricWithName:metricName value:value];
+}
+
++ (void)trackMetricWithName:(NSString *)metricName value:(double)value properties:(NSDictionary *)properties{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackMetricWithName:metricName value:value properties:properties];
+}
+
++ (void)trackPageView:(NSString *)pageName{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName];
+}
+
++ (void)trackPageView:(NSString *)pageName duration:(long)duration{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName duration:duration];
+}
+
++ (void)trackPageView:(NSString *)pageName duration:(long)duration properties:(NSDictionary *)properties{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName duration:duration properties:properties];
+}
+
++ (void)trackException:(NSException *)exception{
+	// TODO: Need a way to track handled exception (managed code) by passing a message and a stacktrace (see XamarinSDK AI)
+}
+
++ (void)setAutoPageViewTrackingDisabled:(BOOL)autoPageViewTrackingDisabled{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager setAutoPageViewTrackingDisabled:autoPageViewTrackingDisabled];
+}
+
++ (void)setAutoSessionManagementDisabled:(BOOL)autoSessionManagementDisabled{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager setAutoSessionManagementDisabled:autoSessionManagementDisabled];
+}
+
++ (void)setServerURL:(NSString *)serverURL{
+	[BITHockeyManager sharedHockeyManager].telemetryManager.serverURL = serverURL;
+}
+
++ (void)startNewSession{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager startNewSession];
+}
+
++ (void)setAppBackgroundTimeBeforeSessionExpires:(NSUInteger)appBackgroundTimeBeforeSessionExpires{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager setAppBackgroundTimeBeforeSessionExpires:appBackgroundTimeBeforeSessionExpires];
+}
+
++ (void)renewSessionWithId:(NSString *)sessionId{
+	[[BITHockeyManager sharedHockeyManager].telemetryManager renewSessionWithId:sessionId];
 }
 
 @end

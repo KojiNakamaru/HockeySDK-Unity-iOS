@@ -79,5 +79,13 @@
 #    define HOCKEYSDK_FEATURE_UPDATES 1
 #endif /* HOCKEYSDK_FEATURE_UPDATES */
 
+/**
+ * If true, include support for tracking telemetry data
+ *
+ * _Default_: Enabled
+ */
+#ifndef HOCKEYSDK_FEATURE_TELEMETRY
+#    define HOCKEYSDK_FEATURE_TELEMETRY 1
+#endif /* HOCKEYSDK_FEATURE_TELEMETRY */
 
 #endif /* HockeySDK_HockeySDKFeatureConfig_h */

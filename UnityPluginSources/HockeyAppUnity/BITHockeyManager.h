@@ -51,6 +51,9 @@
 #if HOCKEYSDK_FEATURE_AUTHENTICATOR
 @class BITAuthenticator;
 #endif
+#if HOCKEYSDK_FEATURE_TELEMETRY
+@class BITTelemetryManager;
+#endif
 
 /** 
  The HockeySDK manager. Responsible for setup and management of all components
@@ -370,6 +373,37 @@
 
 #endif
 
+#if HOCKEYSDK_FEATURE_TELEMETRY
+
+/**
+ Reference to the initialized BITTelemetryManager module
+ 
+ Returns the BITTelemetryManager instance initialized by BITHockeyManager
+ 
+ @see configureWithIdentifier:delegate:
+ @see configureWithBetaIdentifier:liveIdentifier:delegate:
+ @see startManager
+ @see disableTelemetryManager
+ */
+@property (nonatomic, strong, readonly) BITTelemetryManager *telemetryManager;
+
+
+/**
+ Flag the determines whether the Feedback Manager should be disabled
+ 
+ If this flag is enabled, then letting the user give feedback and
+ get responses will be turned off!
+ 
+ Please note that the Feedback Manager instance will be initialized anyway!
+ 
+ @warning This property needs to be set before calling `startManager`
+ 
+ *Default*: _NO_
+ @see feedbackManager
+ */
+@property (nonatomic, getter = isTelemetryManagerDisabled) BOOL disableTelemetryManager;
+
+#endif
 
 ///-----------------------------------------------------------------------------
 /// @name Environment

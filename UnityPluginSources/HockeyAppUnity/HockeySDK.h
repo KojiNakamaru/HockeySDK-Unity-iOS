@@ -67,11 +67,14 @@
 
 #if HOCKEYSDK_FEATURE_AUTHENTICATOR
 #import "BITAuthenticator.h"
-#endif
+#endif /* HOCKEYSDK_FEATURE_AUTHENTICATOR */
+
+#if HOCKEYSDK_FEATURE_TELEMETRY
+#import "BITTelemetryManager.h"
+#endif /* HOCKEYSDK_FEATURE_TELEMETRY */
 
 // Notification message which HockeyManager is listening to, to retry requesting updated from the server
 #define BITHockeyNetworkDidBecomeReachableNotification @"BITHockeyNetworkDidBecomeReachable"
-
 
 /**
  *  HockeySDK Crash Reporter error domain
