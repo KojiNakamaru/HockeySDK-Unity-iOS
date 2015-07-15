@@ -33,124 +33,125 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using HockeyApp.Unity.Shared;
 
-public class TestUI : MonoBehaviour{
-
-	public GUISkin customUISkin;
-	private int controlHeight = 64;
-	private int horizontalMargin = 20;
-	private int space = 20;
-
-	#if (UNITY_IPHONE && !UNITY_EDITOR)
-	[DllImport("__Internal")]
-	private static extern void ExamplePlugin_ForceAppCrash();
-	[DllImport("__Internal")]
-	private static extern void HockeyApp_ShowFeedbackListView();
-	#endif
-
-	void OnGUI(){	
-
-		AutoResize (640, 1136);
-		GUI.skin = customUISkin;
-
-		GUI.Label(GetControlRect(1), "Choose an exception type");
-
-		if(GUI.Button(GetControlRect(2), "Divide By Zero"))
-		{
-
-			int i = 0;
-			i = 5 / i;
-		}
-
-		if(GUI.Button(GetControlRect(3), "Native Code Crash"))
-		{	
-			ForceAppCrash();	
-		}
-
-		if(GUI.Button(GetControlRect(4), "Index Out Of Range"))
-		{
-			string[] arr	= new string[3];
-			arr[4]	= "Out of Range";
-		}
-
-		if(GUI.Button(GetControlRect(5), "Custom Exception"))
-		{	
-			throw new Exception("My Custom Exception");	
-		}
-
-		if(GUI.Button(GetControlRect(6), "Custom Coroutine Exception"))
-		{	
-			StartCoroutine(CorutineCrash());	
-		}
-
-		if(GUI.Button(GetControlRect(7), "Handled Null Pointer Exception"))
-		{	
-			try {
-				NullReferenceException();
-			} catch (Exception e) {
-				throw new Exception("Null Pointer Exception");
-			}	
-		}
-
-		if(GUI.Button(GetControlRect(8), "Null Pointer Exception"))
-		{
-			NullReferenceException();
-		}
-
-		if(GUI.Button(GetControlRect(9), "Coroutine Null Exception"))
-		{	
-			StartCoroutine(CorutineNullCrash());	
-		}
-
-		GUI.Label(GetControlRect(10), "Features");
-
-		if(GUI.Button(GetControlRect(11), "Show Feedback Form"))
-		{	
-			ShowFeedbackForm();
-		}
-	}
-	public void AutoResize(int screenWidth, int screenHeight){
+namespace HockeyApp.Unity.Example.iOS {
+	public class TestUI : MonoBehaviour{
 		
-		Vector2 resizeRatio = new Vector2((float)Screen.width / screenWidth, (float)Screen.height / screenHeight);
-		GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(resizeRatio.x, resizeRatio.y, 1.0f));
-	}
-	
-	System.Collections.IEnumerator CorutineNullCrash(){
-
-		string crash = null;
-		crash	= crash.ToLower();
-		yield break;
-	}
-	
-	System.Collections.IEnumerator CorutineCrash(){	
-
-		throw new Exception("Custom Coroutine Exception");
-	}
-
-	private Rect GetControlRect(int controlIndex){
-
-		return new Rect (horizontalMargin,
-		                controlIndex * (controlHeight + space),
-		                640 - (2 * horizontalMargin),
-		                controlHeight);
-	}
-
-	public void NullReferenceException(){
-		object testObject = null;
-		testObject.GetHashCode();
-	}
-
-	public void ForceAppCrash(){
+		public GUISkin customUISkin;
+		private int controlHeight = 64;
+		private int horizontalMargin = 20;
+		private int space = 20;
 		
 		#if (UNITY_IPHONE && !UNITY_EDITOR)
-		ExamplePlugin_ForceAppCrash();
+		[DllImport("__Internal")]
+		private static extern void ExamplePlugin_ForceAppCrash();
+		[DllImport("__Internal")]
+		private static extern void HockeyApp_ShowFeedbackListView();
 		#endif
-	}
-
-	public void ShowFeedbackForm(){
 		
-		#if (UNITY_IPHONE && !UNITY_EDITOR)
-		HockeyApp_ShowFeedbackListView();
-		#endif
+		void OnGUI(){	
+			
+			AutoResize (640, 1136);
+			GUI.skin = customUISkin;
+			
+			GUI.Label(GetControlRect(1), "HockeyApp Unity");
+			
+			if(GUI.Button(GetControlRect(2), "Index Out Of Range"))
+			{
+				string[] arr	= new string[3];
+				arr[4]	= "Out of Range";
+			}
+			
+			if(GUI.Button(GetControlRect(3), "Native Code Crash"))
+			{	
+				ForceAppCrash();	
+			}
+
+			if(GUI.Button(GetControlRect(4), "Track Event"))
+			{	
+				Dictionary<string,string> properties = new Dictionary<string,string>();
+				properties.Add("Custom event property", "Custom value");
+				TelemetryManager.TrackEvent("My custom event", properties);
+			}
+
+			if(GUI.Button(GetControlRect(5), "Track Message"))
+			{	
+				Dictionary<string,string> properties = new Dictionary<string,string>();
+				properties.Add("Custom message property", "Custom value");
+				TelemetryManager.TrackTrace("My custom message", properties);
+			}
+			
+			if(GUI.Button(GetControlRect(6), "Track metric"))
+			{	
+				Dictionary<string,string> properties = new Dictionary<string,string>();
+				properties.Add("Custom metric property", "Custom value");
+				TelemetryManager.TrackMetric("My custom metric", 2.2);	
+			}
+			
+			if(GUI.Button(GetControlRect(7), "Track page view"))
+			{	
+				Dictionary<string,string> properties = new Dictionary<string,string>();
+				properties.Add("Custom page view property", "Custom value");
+				TelemetryManager.TrackPageView("Menu page", 20000, properties);	
+			}
+			
+			if(GUI.Button(GetControlRect(8), "Start new Session"))
+			{	
+				TelemetryManager.StartNewSession();	
+			}
+			
+			GUI.Label(GetControlRect(9), "Features");
+			
+			if(GUI.Button(GetControlRect(10), "Show Feedback Form"))
+			{	
+				ShowFeedbackForm();
+			}
+		}
+		public void AutoResize(int screenWidth, int screenHeight){
+			
+			Vector2 resizeRatio = new Vector2((float)Screen.width / screenWidth, (float)Screen.height / screenHeight);
+			GUI.matrix = Matrix4x4.TRS(Vector3.zero, Quaternion.identity, new Vector3(resizeRatio.x, resizeRatio.y, 1.0f));
+		}
+		
+		System.Collections.IEnumerator CorutineNullCrash(){
+			
+			string crash = null;
+			crash	= crash.ToLower();
+			yield break;
+		}
+		
+		System.Collections.IEnumerator CorutineCrash(){	
+			
+			throw new Exception("Custom Coroutine Exception");
+		}
+		
+		private Rect GetControlRect(int controlIndex){
+			
+			return new Rect (horizontalMargin,
+			                 controlIndex * (controlHeight + space),
+			                 640 - (2 * horizontalMargin),
+			                 controlHeight);
+		}
+		
+		public void NullReferenceException(){
+			object testObject = null;
+			testObject.GetHashCode();
+		}
+		
+		public void ForceAppCrash(){
+			
+			#if (UNITY_IPHONE && !UNITY_EDITOR)
+			ExamplePlugin_ForceAppCrash();
+			#endif
+		}
+		
+		public void ShowFeedbackForm(){
+			
+			#if (UNITY_IPHONE && !UNITY_EDITOR)
+			HockeyApp_ShowFeedbackListView();
+			#endif
+		}
 	}
 }
+
