@@ -9,41 +9,41 @@ char* createStringCopy(const char *string){
 }
 
 void HockeyApp_StartHockeyManager(char *appID, char *serverURL, char *authType, char *secret, bool updateManagerEnabled, bool autoSendEnabled) {
-  [HockeyAppUnity startManagerWithIdentifier:[NSString stringWithUTF8String:appID]
-                                   serverURL:[NSString stringWithUTF8String:serverURL]
-                                    authType:[NSString stringWithUTF8String:authType]
-                                      secret:[NSString stringWithUTF8String:secret]
-                        updateManagerEnabled:updateManagerEnabled
-                             autoSendEnabled:autoSendEnabled];
-}d
+	[HockeyAppUnity startManagerWithIdentifier:[NSString stringWithUTF8String:appID]
+																	 serverURL:[NSString stringWithUTF8String:serverURL]
+																		authType:[NSString stringWithUTF8String:authType]
+																			secret:[NSString stringWithUTF8String:secret]
+												updateManagerEnabled:updateManagerEnabled
+														 autoSendEnabled:autoSendEnabled];
+}
 
 void HockeyApp_ShowFeedbackListView() {
-  [HockeyAppUnity showFeedbackListView];
+	[HockeyAppUnity showFeedbackListView];
 }
 
 char* HockeyApp_GetVersionCode() {
-  const char* versionCode = [[HockeyAppUnity versionCode] UTF8String];
-  return createStringCopy(versionCode);
+	const char* versionCode = [[HockeyAppUnity versionCode] UTF8String];
+	return createStringCopy(versionCode);
 }
 
 char* HockeyApp_GetVersionName() {
-  const char* versionName = [[HockeyAppUnity versionName] UTF8String];
-  return createStringCopy(versionName);
+	const char* versionName = [[HockeyAppUnity versionName] UTF8String];
+	return createStringCopy(versionName);
 }
 
 char* HockeyApp_GetSdkVersion() {
-  const char* sdkVersion = [[HockeyAppUnity sdkVersion] UTF8String];
-  return createStringCopy(sdkVersion);
+	const char* sdkVersion = [[HockeyAppUnity sdkVersion] UTF8String];
+	return createStringCopy(sdkVersion);
 }
 
 char* HockeyApp_GetSdkName() {
-  const char* sdkName = [[HockeyAppUnity sdkName] UTF8String];
-  return createStringCopy(sdkName);
+	const char* sdkName = [[HockeyAppUnity sdkName] UTF8String];
+	return createStringCopy(sdkName);
 }
 
 char* HockeyApp_GetBundleIdentifier() {
-  const char* bundleIdentifier = [[HockeyAppUnity bundleIdentifier] UTF8String];
-  return createStringCopy(bundleIdentifier);
+	const char* bundleIdentifier = [[HockeyAppUnity bundleIdentifier] UTF8String];
+	return createStringCopy(bundleIdentifier);
 }
 
 //Telemetry
@@ -68,6 +68,17 @@ void HockeyApp_trackTrace1(char *message) {
 void HockeyApp_trackTrace2(char *message, char *properties) {
 	[HockeyAppUnity trackTraceWithMessage:[NSString stringWithUTF8String:message]
 														 properties:[NSString stringWithUTF8String:properties]];
+}
+
+void HockeyApp_trackMetric1(char *metricName, double metric) {
+	[HockeyAppUnity trackMetricWithName:[NSString stringWithUTF8String:metricName]
+																value:metric];
+}
+
+void HockeyApp_trackMetric2(char *metricName, double metric, char *properties) {
+	[HockeyAppUnity trackMetricWithName:[NSString stringWithUTF8String:metricName]
+																value:metric
+													 properties:[NSString stringWithUTF8String:properties]];
 }
 
 void HockeyApp_trackPageView1(char *pageName) {
@@ -108,7 +119,3 @@ void HockeyApp_setAppBackgroundTimeBeforeSessionExpires(int appBackgroundTime){
 void HockeyApp_renewSession(char *sessionId){
 	[HockeyAppUnity renewSessionWithId:[NSString stringWithUTF8String:sessionId]];
 }
-
-
-
-
