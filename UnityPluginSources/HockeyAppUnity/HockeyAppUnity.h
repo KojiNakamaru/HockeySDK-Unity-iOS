@@ -1,7 +1,7 @@
 /*
  * Author: Christoph Wendt
  *
- * Version: 1.0.8
+ * Version: 1.0.9
  *
  * Copyright (c) 2013-2015 HockeyApp, Bit Stadium GmbH.
  * All rights reserved.
@@ -77,20 +77,20 @@ extern "C" {
 + (void)setCommonProperties:(NSDictionary *)commonProperties;
 + (NSDictionary *)commonProperties;
 + (void)trackEventWithName:(NSString *)eventName;
-+ (void)trackEventWithName:(NSString *)eventName properties:(NSDictionary *)properties;
++ (void)trackEventWithName:(NSString *)eventName properties:(NSString *)properties;
 + (void)trackTraceWithMessage:(NSString *)message;
-+ (void)trackTraceWithMessage:(NSString *)message properties:(NSDictionary *)properties;
++ (void)trackTraceWithMessage:(NSString *)message properties:(NSString *)properties;
 + (void)trackMetricWithName:(NSString *)metricName value:(double)value;
-+ (void)trackMetricWithName:(NSString *)metricName value:(double)value properties:(NSDictionary *)properties;
++ (void)trackMetricWithName:(NSString *)metricName value:(double)value properties:(NSString *)properties;
 + (void)trackPageView:(NSString *)pageName;
 + (void)trackPageView:(NSString *)pageName duration:(long)duration;
-+ (void)trackPageView:(NSString *)pageName duration:(long)duration properties:(NSDictionary *)properties;
++ (void)trackPageView:(NSString *)pageName duration:(long)duration properties:(NSString *)properties;
 + (void)trackException:(NSException *)exception;
 + (void)setAutoPageViewTrackingDisabled:(BOOL)autoPageViewTrackingDisabled;
 + (void)setAutoSessionManagementDisabled:(BOOL)autoSessionManagementDisabled;
 + (void)setServerURL:(NSString *)serverURL;
 + (void)startNewSession;
-+ (void)setAppBackgroundTimeBeforeSessionExpires:(NSUInteger)appBackgroundTimeBeforeSessionExpires;
++ (void)setAppBackgroundTimeBeforeSessionExpires:(int)appBackgroundTimeBeforeSessionExpires;
 + (void)renewSessionWithId:(NSString *)sessionId;
 
 @end

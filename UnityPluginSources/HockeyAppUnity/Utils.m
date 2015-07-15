@@ -1,7 +1,7 @@
 /*
  * Author: Christoph Wendt
  *
- * Version: 1.0.8
+ * Version: 1.0.9
  *
  * Copyright (c) 2013-2014 HockeyApp, Bit Stadium GmbH.
  * All rights reserved.
@@ -59,6 +59,22 @@
   }
   
   return BITCrashManagerStatusAlwaysAsk;
+}
+
++ (NSDictionary *)dictionaryFromString:(NSString *)dictString{
+	
+	NSArray *keyValuePairs = [dictString componentsSeparatedByString:@"\n"];
+	NSMutableDictionary *dict = [NSMutableDictionary new];
+	
+	for(NSString *pair in keyValuePairs){
+		NSRange range = [pair rangeOfString:@"="];
+		if (range.location != NSNotFound) {
+			NSString *key = [pair substringToIndex:range.location];
+			NSString *value = [pair substringFromIndex:range.location+1];
+			dict[key] = value;
+		}
+	}
+	return dict;
 }
 
 @end

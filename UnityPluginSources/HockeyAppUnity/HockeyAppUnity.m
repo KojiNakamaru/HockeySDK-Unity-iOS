@@ -1,7 +1,7 @@
 /*
  * Author: Christoph Wendt
  *
- * Version: 1.0.8
+ * Version: 1.0.9
  *
  * Copyright (c) 2013-2015 HockeyApp, Bit Stadium GmbH.
  * All rights reserved.
@@ -175,7 +175,7 @@
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackEventWithName:eventName];
 }
 
-+ (void)trackEventWithName:(NSString *)eventName properties:(NSDictionary *)properties{
++ (void)trackEventWithName:(NSString *)eventName properties:(NSString *)properties{
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackEventWithName:eventName properties:properties];
 }
 
@@ -183,7 +183,7 @@
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackTraceWithMessage:message];
 }
 
-+ (void)trackTraceWithMessage:(NSString *)message properties:(NSDictionary *)properties{
++ (void)trackTraceWithMessage:(NSString *)message properties:(NSString *)properties{
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackTraceWithMessage:message properties:properties];
 }
 
@@ -191,7 +191,7 @@
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackMetricWithName:metricName value:value];
 }
 
-+ (void)trackMetricWithName:(NSString *)metricName value:(double)value properties:(NSDictionary *)properties{
++ (void)trackMetricWithName:(NSString *)metricName value:(double)value properties:(NSString *)properties{
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackMetricWithName:metricName value:value properties:properties];
 }
 
@@ -203,7 +203,7 @@
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName duration:duration];
 }
 
-+ (void)trackPageView:(NSString *)pageName duration:(long)duration properties:(NSDictionary *)properties{
++ (void)trackPageView:(NSString *)pageName duration:(long)duration properties:(NSString *)properties{
 	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName duration:duration properties:properties];
 }
 
@@ -227,7 +227,7 @@
 	[[BITHockeyManager sharedHockeyManager].telemetryManager startNewSession];
 }
 
-+ (void)setAppBackgroundTimeBeforeSessionExpires:(NSUInteger)appBackgroundTimeBeforeSessionExpires{
++ (void)setAppBackgroundTimeBeforeSessionExpires:(int)appBackgroundTimeBeforeSessionExpires{
 	[[BITHockeyManager sharedHockeyManager].telemetryManager setAppBackgroundTimeBeforeSessionExpires:appBackgroundTimeBeforeSessionExpires];
 }
 
