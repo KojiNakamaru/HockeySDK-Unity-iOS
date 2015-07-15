@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B270BC51B55DB0500AD0B61 /* HockeyAppUnityWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B270BC41B55DB0500AD0B61 /* HockeyAppUnityWrapper.m */; };
 		1BC1D0621952EBB1006E61BD /* Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BC1D0611952EBB1006E61BD /* Utils.m */; };
 		1BC5D65218D71C66008CB6F8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BC5D65118D71C66008CB6F8 /* Foundation.framework */; };
 		1BC5D65718D71C66008CB6F8 /* HockeyAppUnity.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1BC5D65618D71C66008CB6F8 /* HockeyAppUnity.h */; };
@@ -38,7 +37,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1B270BC41B55DB0500AD0B61 /* HockeyAppUnityWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HockeyAppUnityWrapper.m; sourceTree = "<group>"; };
 		1BC1D0601952EBB1006E61BD /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		1BC1D0611952EBB1006E61BD /* Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utils.m; sourceTree = "<group>"; };
 		1BC5D64E18D71C66008CB6F8 /* libHockeyAppUnity.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libHockeyAppUnity.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,7 +179,6 @@
 				1BC5D65418D71C66008CB6F8 /* Supporting Files */,
 				1BC1D0601952EBB1006E61BD /* Utils.h */,
 				1BC1D0611952EBB1006E61BD /* Utils.m */,
-				1B270BC41B55DB0500AD0B61 /* HockeyAppUnityWrapper.m */,
 			);
 			path = HockeyAppUnity;
 			sourceTree = "<group>";
@@ -245,7 +242,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1B270BC51B55DB0500AD0B61 /* HockeyAppUnityWrapper.m in Sources */,
 				1BC5D65918D71C66008CB6F8 /* HockeyAppUnity.m in Sources */,
 				1BC1D0621952EBB1006E61BD /* Utils.m in Sources */,
 			);

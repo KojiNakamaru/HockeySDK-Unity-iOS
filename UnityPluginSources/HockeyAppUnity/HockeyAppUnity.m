@@ -163,8 +163,9 @@
   UnitySendMessage([gameObj UTF8String], [method UTF8String], [msg UTF8String]);
 }
 
-+ (void)setCommonProperties:(NSDictionary *)commonProperties{
-	[BITHockeyManager sharedHockeyManager].telemetryManager.commonProperties = commonProperties;
++ (void)setCommonProperties:(NSString *)commonProperties{
+	NSDictionary *propertiesDict = [Utils dictionaryFromString:commonProperties];
+	[BITHockeyManager sharedHockeyManager].telemetryManager.commonProperties = propertiesDict;
 }
 
 + (NSDictionary *)commonProperties{
@@ -176,7 +177,9 @@
 }
 
 + (void)trackEventWithName:(NSString *)eventName properties:(NSString *)properties{
-	[[BITHockeyManager sharedHockeyManager].telemetryManager trackEventWithName:eventName properties:properties];
+	NSDictionary *propertiesDict = [Utils dictionaryFromString:properties];
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackEventWithName:eventName
+																																	 properties:propertiesDict];
 }
 
 + (void)trackTraceWithMessage:(NSString *)message{
@@ -184,7 +187,9 @@
 }
 
 + (void)trackTraceWithMessage:(NSString *)message properties:(NSString *)properties{
-	[[BITHockeyManager sharedHockeyManager].telemetryManager trackTraceWithMessage:message properties:properties];
+	NSDictionary *propertiesDict = [Utils dictionaryFromString:properties];
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackTraceWithMessage:message
+																																			properties:propertiesDict];
 }
 
 + (void)trackMetricWithName:(NSString *)metricName value:(double)value{
@@ -192,7 +197,10 @@
 }
 
 + (void)trackMetricWithName:(NSString *)metricName value:(double)value properties:(NSString *)properties{
-	[[BITHockeyManager sharedHockeyManager].telemetryManager trackMetricWithName:metricName value:value properties:properties];
+	NSDictionary *propertiesDict = [Utils dictionaryFromString:properties];
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackMetricWithName:metricName
+																																				 value:value
+																																		properties:propertiesDict];
 }
 
 + (void)trackPageView:(NSString *)pageName{
@@ -200,11 +208,15 @@
 }
 
 + (void)trackPageView:(NSString *)pageName duration:(long)duration{
-	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName duration:duration];
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName
+																																duration:duration];
 }
 
 + (void)trackPageView:(NSString *)pageName duration:(long)duration properties:(NSString *)properties{
-	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName duration:duration properties:properties];
+	NSDictionary *propertiesDict = [Utils dictionaryFromString:properties];
+	[[BITHockeyManager sharedHockeyManager].telemetryManager trackPageView:pageName
+																																duration:duration
+																															properties:propertiesDict];
 }
 
 + (void)trackException:(NSException *)exception{

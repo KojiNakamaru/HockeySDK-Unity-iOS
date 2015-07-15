@@ -34,5 +34,6 @@
 
 + (BITAuthenticatorIdentificationType)identificationTypeForString:(NSString *)typeString;
 + (BITCrashManagerStatus)statusForAutoSendEnabled:(BOOL)autoSendEnabled;
++ (NSDictionary *)dictionaryFromString:(NSString *)dictString;
 
 @end
