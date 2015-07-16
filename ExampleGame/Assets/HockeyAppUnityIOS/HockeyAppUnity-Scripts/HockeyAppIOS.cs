@@ -87,14 +87,13 @@ namespace HockeyApp.Unity.iOS {
 				List<string> logFileDirs = GetLogFiles();
 				if ( logFileDirs.Count > 0)
 				{
-					StartCoroutine(SendLogs(GetLogFiles()));
+					StartCoroutine(SendLogs(logFileDirs));
 				}
 			}
 			#endif
 		}
 		
 		void OnEnable(){
-			
 			#if (UNITY_IPHONE && !UNITY_EDITOR)
 			if(exceptionLogging == true){
 				System.AppDomain.CurrentDomain.UnhandledException += OnHandleUnresolvedException;
@@ -223,7 +222,6 @@ namespace HockeyApp.Unity.iOS {
 		/// </summary>
 		/// <returns>A list which contains the filenames of the log files.</returns>
 		protected virtual List<string> GetLogFiles() {
-			
 			List<string> logs = new List<string>();
 			
 			#if (UNITY_IPHONE && !UNITY_EDITOR)
@@ -253,13 +251,13 @@ namespace HockeyApp.Unity.iOS {
 						}
 					}
 				}
+				Debug.Log ("HOCKEYAPP: GetLogFiles() SUCCESS" + files.Length);
 			}
 			catch(Exception e)
 			{
-				if (Debug.isDebugBuild) Debug.Log("Failed to write exception log to file: " + e);
+				if (Debug.isDebugBuild) Debug.Log("Failed to load exception log: " + e);
 			}
 			#endif
-			
 			return logs;
 		}
 		
@@ -267,8 +265,7 @@ namespace HockeyApp.Unity.iOS {
 		/// Upload existing reports to HockeyApp and delete them locally.
 		/// </summary>
 		protected virtual IEnumerator SendLogs(List<string> logs){
-			
-			
+
 			string crashPath = HOCKEYAPP_CRASHESPATH;
 			string url = GetBaseURL() + crashPath.Replace("[APPID]", appID);
 			
@@ -276,12 +273,12 @@ namespace HockeyApp.Unity.iOS {
 			string sdkVersion = HockeyApp_GetSdkVersion ();
 			string sdkName = HockeyApp_GetSdkName ();
 			if (sdkName != null && sdkVersion != null) {
-				url += "?sdk=" + sdkName + "&sdk_version=" + sdkVersion;
+				url += "?sdk=" + WWW.EscapeURL(sdkName) + "&sdk_version=" + sdkVersion;
 			}
 			#endif
 			
 			foreach (string log in logs) {
-				
+
 				WWWForm postForm = CreateForm (log);
 				string lContent = postForm.headers ["Content-Type"].ToString ();
 				lContent = lContent.Replace ("\"", "");
@@ -300,6 +297,8 @@ namespace HockeyApp.Unity.iOS {
 					{
 						if (Debug.isDebugBuild) Debug.Log ("Failed to delete exception log: " + e);
 					}
+				}else{
+					Debug.Log("Failed to send exception log: " + www.error);
 				}
 			}
 		}
@@ -437,7 +436,6 @@ namespace HockeyApp.Unity.iOS {
 		/// <param name="stackTrace">The stacktrace for the exception.</param>
 		/// <param name="type">The type of the log message.</param>
 		public void OnHandleLogCallback(string logString, string stackTrace, LogType type){
-			
 			#if (UNITY_IPHONE && !UNITY_EDITOR)
 			if(LogType.Assert == type || LogType.Exception == type || LogType.Error == type)	
 			{	
@@ -447,7 +445,6 @@ namespace HockeyApp.Unity.iOS {
 		}
 		
 		public void OnHandleUnresolvedException(object sender, System.UnhandledExceptionEventArgs args){
-			
 			#if (UNITY_IPHONE && !UNITY_EDITOR)
 			if(args == null || args.ExceptionObject == null)
 			{	
