@@ -37,20 +37,13 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using HockeyApp.Unity.Shared;
 
-namespace HockeyApp.Unity.Example.iOS {
+namespace HockeyApp.Unity.Example.Shared {
 	public class TestUI : MonoBehaviour{
 		
 		public GUISkin customUISkin;
 		private int controlHeight = 64;
 		private int horizontalMargin = 20;
 		private int space = 20;
-		
-		#if (UNITY_IPHONE && !UNITY_EDITOR)
-		[DllImport("__Internal")]
-		private static extern void ExamplePlugin_ForceAppCrash();
-		[DllImport("__Internal")]
-		private static extern void HockeyApp_ShowFeedbackListView();
-		#endif
 		
 		void OnGUI(){	
 			
@@ -69,14 +62,14 @@ namespace HockeyApp.Unity.Example.iOS {
 			{	
 				ForceAppCrash();	
 			}
-
+			
 			if(GUI.Button(GetControlRect(4), "Track Event"))
 			{	
 				Dictionary<string,string> properties = new Dictionary<string,string>();
 				properties.Add("Custom event property", "Custom value");
 				TelemetryManager.TrackEvent("My custom event", properties);
 			}
-
+			
 			if(GUI.Button(GetControlRect(5), "Track Message"))
 			{	
 				Dictionary<string,string> properties = new Dictionary<string,string>();
@@ -98,9 +91,9 @@ namespace HockeyApp.Unity.Example.iOS {
 				TelemetryManager.TrackPageView("Menu page", 20000, properties);	
 			}
 			
-			if(GUI.Button(GetControlRect(8), "Start new Session"))
+			if(GUI.Button(GetControlRect(8), "Renew session"))
 			{	
-				TelemetryManager.StartNewSession();	
+				TelemetryManager.RenewSession(System.DateTime.Today.ToString())
 			}
 			
 			GUI.Label(GetControlRect(9), "Features");
@@ -141,10 +134,25 @@ namespace HockeyApp.Unity.Example.iOS {
 			testObject.GetHashCode();
 		}
 		
+		#if (UNITY_IPHONE && !UNITY_EDITOR)
+		[DllImport("__Internal")]
+		private static extern void ExamplePlugin_ForceAppCrash();
+		[DllImport("__Internal")]
+		private static extern void HockeyApp_ShowFeedbackListView();
+		#elif (UNITY_ANDROID && !UNITY_EDITOR)
+		private string appID = "b90dca1145f290bf8031784c196b34df";
+		private string serverURL = "    https://rink.hockeyapp.net/     ";
+		#endif
+		
 		public void ForceAppCrash(){
 			
 			#if (UNITY_IPHONE && !UNITY_EDITOR)
 			ExamplePlugin_ForceAppCrash();
+			#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			AndroidJavaClass player = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaObject activity = player.GetStatic<AndroidJavaObject>("currentActivity"); 
+			AndroidJavaObject exampleClass = new AndroidJavaObject("net.hockeyapp.exampleunityplugin.ExampleClass"); 
+			exampleClass.Call("forceAppCrash", activity);
 			#endif
 		}
 		
@@ -152,6 +160,11 @@ namespace HockeyApp.Unity.Example.iOS {
 			
 			#if (UNITY_IPHONE && !UNITY_EDITOR)
 			HockeyApp_ShowFeedbackListView();
+			#elif (UNITY_ANDROID && !UNITY_EDITOR)
+			AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer"); 
+			AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity"); 
+			AndroidJavaClass pluginClass = new AndroidJavaClass("net.hockeyapp.unity.HockeyUnityPlugin"); 
+			pluginClass.CallStatic("startFeedbackForm", currentActivity, serverURL.Trim(), appID);
 			#endif
 		}
 	}
