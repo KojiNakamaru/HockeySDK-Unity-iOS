@@ -108,10 +108,6 @@ void HockeyApp_setServerURL(char *serverURL){
 	[HockeyAppUnity setServerURL:[NSString stringWithUTF8String:serverURL]];
 }
 
-void HockeyApp_startNewSession(){
-	[HockeyAppUnity startNewSession];
-}
-
 void HockeyApp_setAppBackgroundTimeBeforeSessionExpires(int appBackgroundTime){
 	[HockeyAppUnity setAppBackgroundTimeBeforeSessionExpires:appBackgroundTime];
 }

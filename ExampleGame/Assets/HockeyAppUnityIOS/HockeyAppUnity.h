@@ -88,7 +88,6 @@ extern "C" {
 + (void)setAutoPageViewTrackingDisabled:(BOOL)autoPageViewTrackingDisabled;
 + (void)setAutoSessionManagementDisabled:(BOOL)autoSessionManagementDisabled;
 + (void)setServerURL:(NSString *)serverURL;
-+ (void)startNewSession;
 + (void)setAppBackgroundTimeBeforeSessionExpires:(NSUInteger)appBackgroundTimeBeforeSessionExpires;
 + (void)renewSessionWithId:(NSString *)sessionId;
 

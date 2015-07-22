@@ -29,6 +29,8 @@
  */
 
 #import <Foundation/Foundation.h>
+@class MSAIUser;
+@class MSAINullability;
 
 #ifdef __cplusplus
 extern "C" {
@@ -71,5 +73,22 @@ extern "C" {
 + (NSString *)bundleIdentifier;
 + (NSString *)sdkVersion;
 + (NSString *)sdkName;
+
++ (void)setCommonProperties:(NSDictionary *)commonProperties;
++ (void)trackEventWithName:(NSString *)eventName;
++ (void)trackEventWithName:(NSString *)eventName properties:(NSDictionary *)properties;
++ (void)trackTraceWithMessage:(NSString *)message;
++ (void)trackTraceWithMessage:(NSString *)message properties:(NSDictionary *)properties;
++ (void)trackMetricWithName:(NSString *)metricName value:(double)value;
++ (void)trackMetricWithName:(NSString *)metricName value:(double)value properties:(NSDictionary *)properties;
++ (void)trackPageView:(NSString *)pageName;
++ (void)trackPageView:(NSString *)pageName duration:(long)duration;
++ (void)trackPageView:(NSString *)pageName duration:(long)duration properties:(NSDictionary *)properties;
++ (void)trackException:(NSException *)exception;
++ (void)setAutoPageViewTrackingDisabled:(BOOL)autoPageViewTrackingDisabled;
++ (void)setAutoSessionManagementDisabled:(BOOL)autoSessionManagementDisabled;
++ (void)setServerURL:(NSString *)serverURL;
++ (void)setAppBackgroundTimeBeforeSessionExpires:(NSUInteger)appBackgroundTimeBeforeSessionExpires;
++ (void)renewSessionWithId:(NSString *)sessionId;
 
 @end

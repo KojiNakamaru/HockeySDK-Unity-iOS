@@ -205,10 +205,6 @@
 	[BITHockeyManager sharedHockeyManager].telemetryManager.serverURL = serverURL;
 }
 
-+ (void)startNewSession{
-	[[BITHockeyManager sharedHockeyManager].telemetryManager startNewSession];
-}
-
 + (void)setAppBackgroundTimeBeforeSessionExpires:(int)appBackgroundTimeBeforeSessionExpires{
 	[[BITHockeyManager sharedHockeyManager].telemetryManager setAppBackgroundTimeBeforeSessionExpires:appBackgroundTimeBeforeSessionExpires];
 }
