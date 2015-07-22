@@ -45,6 +45,7 @@ namespace HockeyApp.Unity.iOS {
 		protected const string LOG_FILE_DIR = "/logs/";
 		protected const int MAX_CHARS = 199800;
 		
+		
 		public enum AuthenticatorType {
 			Anonymous,
 			Device,
@@ -53,13 +54,16 @@ namespace HockeyApp.Unity.iOS {
 			WebAuth
 		}
 		
+		[Header("HockeyApp Information")]
 		public string appID = "your-hockey-app-id";
+		public string serverURL = "your-custom-server-url";
+		[Header("Crashes & Exceptions")]
+		public bool autoUpload = false;
+		public bool exceptionLogging = false;
+		[Header("Beta Testing")]
 		public AuthenticatorType authenticatorType;
 		public string secret = "your-hockey-app-secret";
-		public string serverURL = "your-custom-server-url";
-		
-		public bool autoUpload = false;
-		public bool exceptionLogging = true;
+		[Header("App Updates")]
 		public bool updateManager = false;
 		
 		#if (UNITY_IPHONE && !UNITY_EDITOR)
